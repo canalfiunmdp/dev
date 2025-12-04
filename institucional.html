@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autoridades - Prueba Joomla</title>
+    
+</head>
+<body>
+
+<style>
+    /* ------------------------------------------- */
+    /* CSS INTEGRADO - Estilos para la tabla de Autoridades */
+    /* ------------------------------------------- */
+
+    /* Contenedor con imagen de fondo */
+    .fondo-autoridades {
+        background-image: url('file:///mnt/79f90ce0-19dc-422f-9f3d-8adfb2e0da18/Taller/academica/fotos/fondo.jpg?w=1920');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        min-height: 100vh;
+        padding: 20px 0;
+    }
+
+    /* Estilos del Contenedor Principal */
+    .autoridades-container {
+        max-width: 900px;
+        margin: 20px auto;
+        padding: 30px;
+        font-family: Arial, sans-serif;
+        background-color: rgba(240, 248, 255, 0.75);
+        border: 5px solid #008080;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        border-radius: 10px;
+    }
+
+    /* Títulos de las Secciones */
+    .section-title {
+        background: linear-gradient(135deg, #008080 0%, #006666 100%);
+        color: white;
+        padding: 15px 0;
+        text-align: center;
+        margin: 20px 0 20px 0;
+        font-size: 1.5em;
+        font-weight: bold;
+        border-radius: 8px;
+        letter-spacing: 1px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+    }
+
+    /* Estilos para Decana y Vicedecano (Diseño de Tarjetas con Fotos) */
+    .autoridades-header {
+        display: flex;
+        justify-content: space-around;
+        gap: 30px;
+        margin-bottom: 30px;
+        flex-wrap: wrap; 
+    }
+
+    .autoridad-card {
+        flex: 1;
+        min-width: 280px;
+        text-align: center;
+        padding: 20px;
+        background: linear-gradient(135deg, rgba(224, 242, 242, 0.75) 0%, rgba(240, 248, 255, 0.75) 100%);
+        border: 3px solid #008080;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .autoridad-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .autoridad-foto {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid #008080;
+        margin-bottom: 15px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .autoridad-card .rol {
+        font-size: 1.3em;
+        color: #008080;
+        margin-top: 0;
+        margin-bottom: 10px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .autoridad-card .nombre {
+        font-size: 1.1em;
+        color: #333;
+        font-weight: 600;
+        line-height: 1.4;
+    }
+
+    /* Estilos de las Tablas (Secretarías y Departamentos) - Diseño con Fotos */
+    .secretarias-table, .departamentos-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 15px;
+        margin-bottom: 20px;
+    }
+
+    .secretarias-table tr, .departamentos-table tr {
+        background-color: rgba(255, 255, 255, 0.7);
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .secretarias-table tr:hover, 
+    .departamentos-table tr:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        background-color: rgba(224, 242, 242, 0.75);
+    }
+
+    .secretarias-table td, .departamentos-table td {
+        padding: 15px;
+        border: none;
+    }
+
+    .secretarias-table td:first-child, .departamentos-table td:first-child {
+        border-radius: 10px 0 0 10px;
+    }
+
+    .secretarias-table td:last-child, .departamentos-table td:last-child {
+        border-radius: 0 10px 10px 0;
+    }
+
+    /* Columna de Foto */
+    .foto-cell {
+        width: 80px;
+        text-align: center;
+        padding: 10px;
+    }
+
+    .persona-foto {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #008080;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    /* Columna del Cargo/Departamento */
+    .secretarias-table .cargo, .departamentos-table .departamento {
+        width: 50%; 
+        font-weight: bold;
+        color: #008080;
+        font-size: 0.95em;
+    }
+
+    /* Columna de la Persona */
+    .secretarias-table .persona, .departamentos-table .persona {
+        width: auto;
+        font-weight: 600;
+        color: #333;
+    }
+
+    /* Centro de Estudiantes */
+    .centro-estudiantes-card {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        padding: 20px;
+        border: 3px solid #008080;
+        background: linear-gradient(135deg, rgba(224, 242, 242, 0.75) 0%, rgba(240, 248, 255, 0.75) 100%);
+        border-radius: 15px;
+        margin-top: 10px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        flex-wrap: wrap;
+    }
+
+    .centro-estudiantes-foto {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #008080;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    }
+
+    .centro-estudiantes-info {
+        text-align: center;
+        font-size: 1.2em;
+    }
+
+    .centro-estudiantes-info .cargo-ce {
+        font-weight: bold;
+        color: #008080;
+        margin-bottom: 5px;
+    }
+
+    .centro-estudiantes-info .nombre-ce {
+        font-weight: 600;
+        color: #333;
+    }
+
+    /* Estilos para móviles */
+    @media (max-width: 600px) {
+        .fondo-autoridades {
+            padding: 10px 0;
+        }
+
+        .autoridades-container {
+            padding: 15px;
+        }
+
+        .autoridad-foto {
+            width: 120px;
+            height: 120px;
+        }
+
+        .secretarias-table td, .departamentos-table td {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            border-radius: 0 !important;
+        }
+        
+        .foto-cell {
+            width: 100%;
+            border-radius: 10px 10px 0 0 !important;
+        }
+
+        .secretarias-table .cargo, .departamentos-table .departamento {
+            width: 100%;
+        }
+
+        .secretarias-table .persona, .departamentos-table .persona {
+            width: 100%;
+            border-radius: 0 0 10px 10px !important;
+        }
+
+        .centro-estudiantes-card {
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+</style>
+
+<div class="fondo-autoridades">
+<div class="autoridades-container">
+    <h2 class="section-title principal">AUTORIDADES</h2>
+    <div class="autoridades-header">
+        <div class="autoridad-card decana">
+            <img src="file:///mnt/79f90ce0-19dc-422f-9f3d-8adfb2e0da18/Taller/academica/fotos/ana-sanchez.jpg" 
+                 alt="Decana" 
+                 class="autoridad-foto">
+            <h3 class="rol">Decana</h3>
+            <p class="nombre">Esp. Ing. Ana del Valle SÁNCHEZ</p>
+        </div>
+        <div class="autoridad-card vicedecano">
+            <img src="file:///mnt/79f90ce0-19dc-422f-9f3d-8adfb2e0da18/Taller/academica/fotos/francisco-alvarez.jpg?w=300&h=300&fit=crop" 
+                 alt="Vicedecano" 
+                 class="autoridad-foto">
+            <h3 class="rol">Vicedecano</h3>
+            <p class="nombre">Ing. Francisco José ÁLVAREZ</p>
+        </div>
+    </div>
+
+    <h2 class="section-title">SECRETARÍAS</h2>
+    <table class="secretarias-table">
+        <tbody>
+            <tr>
+                <td class="foto-cell">
+                    <img src="file:///mnt/79f90ce0-19dc-422f-9f3d-8adfb2e0da18/Taller/academica/fotos/Gustavo-Zabaleta.jpg?w=120&h=120&fit=crop" 
+                         alt="Foto" class="persona-foto">
+                </td>
+                <td class="cargo">SECRETARIO ACADÉMICO</td>
+                <td class="persona">Dr. Omar Gustavo ZABALETA</td>
+            </tr>
+            <tr>
+                <td class="foto-cell">
+                    <img src="file:///mnt/79f90ce0-19dc-422f-9f3d-8adfb2e0da18/Taller/academica/fotos/nn.jpg?w=120&h=120&fit=crop" 
+                         alt="Foto" class="persona-foto">
+                </td>
+                <td class="cargo">SUBSECRETARIA ACADÉMICA</td>
+                <td class="persona">Ing. Sandra GONZALEZ</td>
+            </tr>
+            <tr>
+                <td class="foto-cell">
+                    <img src="file:///mnt/79f90ce0-19dc-422f-9f3d-8adfb2e0da18/Taller/academica/fotos/Ignacio-Durruty.jpg?w=120&h=120&fit=crop" 
+                         alt="Foto" class="persona-foto">
+                </td>
+                <td class="cargo">SECRETARIO DE COORDINACIÓN</td>
+                <td class="persona">Dr. Ignacio DURRUTY</td>
+            </tr>
+            <tr>
+                <td class="foto-cell">
+                    <img src="file:///mnt/79f90ce0-19dc-422f-9f3d-8adfb2e0da18/Taller/academica/fotos/claudio-gonzalez.jpg?w=120&h=120&fit=crop" 
+                         alt="Foto" class="persona-foto">
+                </td>
+                <td class="cargo">SECRETARIO DE INVESTIGACIÓN Y POSGRADO</td>
+                <td class="persona">Dr. Claudio Marcelo GONZÁLEZ</td>
+            </tr>
+            <tr>
+                <td class="foto-cell">
+                    <img src="file:///mnt/79f90ce0-19dc-422f-9f3d-8adfb2e0da18/Taller/academica/fotos/Daniel-Sosa.jpg?w=120&h=120&fit=crop" 
+                         alt="Foto" class="persona-foto">
+                </td>
+                <td class="cargo">SECRETARIA DE TECNOLOGÍA, INDUSTRIA Y EXTENSIÓN</td>
+                <td class="persona">Ing. Daniel Sosa</td>
+            </tr>
+            <tr>
+                <td class="foto-cell">
+                    <img src="file:///mnt/79f90ce0-19dc-422f-9f3d-8adfb2e0da18/Taller/academica/fotos/Belen-Mena.jpg?w=120&h=120&fit=crop" 
+                         alt="Foto" class="persona-foto">
+                </td>
+                <td class="cargo">SUBSECRETARIA DE EXTENSIÓN</td>
+                <td class="persona">Ing. Belén MENA</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">DIRECTORES DE DEPARTAMENTO</h2>
+    <table class="departamentos-table">
+        <tbody>
+            <tr>
+                <td class="foto-cell">
+                    <img src="file:///mnt/79f90ce0-19dc-422f-9f3d-8adfb2e0da18/Taller/academica/fotos/JuanCarlos-Rodriguez.jpg?w=120&h=120&fit=crop" 
+                         alt="Foto" class="persona-foto">
+                </td>
+                <td class="departamento">Depto. Física</td>
+                <td class="persona">Ing. Juan Carlos RODRIGUEZ</td>
+            </tr>
+            <tr>
+                <td class="foto-cell">
+                    <img src="file:///mnt/79f90ce0-19dc-422f-9f3d-8adfb2e0da18/Taller/academica/fotos/jorge-Strack.jpg?w=120&h=120&fit=crop" 
+                         alt="Foto" class="persona-foto">
+                </td>
+                <td class="departamento">Depto. de Ing. Eléctrica</td>
+                <td class="persona">Dr. Ing. Téc. Jorge Luis STRACK</td>
+            </tr>
+            <tr>
+                <td class="foto-cell">
+                    <img src="file:///mnt/79f90ce0-19dc-422f-9f3d-8adfb2e0da18/Taller/academica/fotos/Adriana-Scandurra.jpg?w=120&h=120&fit=crop" 
+                         alt="Foto" class="persona-foto">
+                </td>
+                <td class="departamento">Depto. de Ing. Electrónica y en Computación</td>
+                <td class="persona">Dra. Adriana SCANDURRA</td>
+            </tr>
+            <tr>
+                <td class="foto-cell">
+                    <img src="file:///mnt/79f90ce0-19dc-422f-9f3d-8adfb2e0da18/Taller/academica/fotos/Antonio-Morcela.jpg?w=120&h=120&fit=crop" 
+                         alt="Foto" class="persona-foto">
+                </td>
+                <td class="departamento">Depto. de Ing. Industrial</td>
+                <td class="persona">Mg. Oscar Antonio MORCELA</td>
+            </tr>
+            <tr>
+                <td class="foto-cell">
+                    <img src="file:///mnt/79f90ce0-19dc-422f-9f3d-8adfb2e0da18/Taller/academica/fotos/Carlos-Rico.jpg?w=120&h=120&fit=crop" 
+                         alt="Foto" class="persona-foto">
+                </td>
+                <td class="departamento">Depto. de Ing. Informática</td>
+                <td class="persona">Lic. Carlos Alberto RICO</td>
+            </tr>
+            <tr>
+                <td class="foto-cell">
+                    <img src="file:///mnt/79f90ce0-19dc-422f-9f3d-8adfb2e0da18/Taller/academica/fotos/valeria-pettarin.jpg?w=120&h=120&fit=crop" 
+                         alt="Foto" class="persona-foto">
+                </td>
+                <td class="departamento">Depto. de Ing. en Materiales</td>
+                <td class="persona">Dra. Valeria PETTARIN</td>
+            </tr>
+            <tr>
+                <td class="foto-cell">
+                    <img src="file:///mnt/79f90ce0-19dc-422f-9f3d-8adfb2e0da18/Taller/academica/fotos/ricardo-zucal.jpg?w=120&h=120&fit=crop" 
+                         alt="Foto" class="persona-foto">
+                </td>
+                <td class="departamento">Depto. de Ing. Mecánica</td>
+                <td class="persona">Ing.Ricardo ZUCAL</td>
+            </tr>
+            <tr>
+                <td class="foto-cell">
+                    <img src="file:///mnt/79f90ce0-19dc-422f-9f3d-8adfb2e0da18/Taller/academica/fotos/Ezequiel-Soule.jpg?w=120&h=120&fit=crop" 
+                         alt="Foto" class="persona-foto">
+                </td>
+                <td class="departamento">Depto. de Ing. Química y en Alimentos</td>
+                <td class="persona">Dr. Ezequiel Rodolfo SOULÉ</td>
+            </tr>
+            <tr>
+                <td class="foto-cell">
+                    <img src="file:///mnt/79f90ce0-19dc-422f-9f3d-8adfb2e0da18/Taller/academica/fotos/nn.jpg?w=120&h=120&fit=crop" 
+                         alt="Foto" class="persona-foto">
+                </td>
+                <td class="departamento">Depto. de Matemática</td>
+                <td class="persona">Dra. María Gabriela MESSINEO</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h2 class="section-title centro">CENTRO DE ESTUDIANTES</h2>
+    <div class="centro-estudiantes-card">
+        <img src="file:///mnt/79f90ce0-19dc-422f-9f3d-8adfb2e0da18/Taller/academica/fotos/Elena-Marchetti.jpg?w=200&h=200&fit=crop" 
+             alt="Presidente Centro de Estudiantes" 
+             class="centro-estudiantes-foto">
+        <div class="centro-estudiantes-info">
+            <div class="cargo-ce">PRESIDENTE</div>
+            <div class="nombre-ce">Elena Marchetti</div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
